@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Guest Link Maker</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23B5694F'/%3E%3Cpath d='M32 46s-14-8.5-14-18a8 8 0 0 1 14-5 8 8 0 0 1 14 5c0 9.5-14 18-14 18z' fill='%23FFF8F1'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@400;500;600;700&family=Cormorant+Garamond:wght@600&display=swap" />
+  <link rel="stylesheet" href="assets/css/admin.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand__mark" aria-hidden="true">♥</span>
+      <div>
+        <p class="brand__title">Guest Link Maker</p>
+        <p class="brand__sub" id="coupleLabel"></p>
+      </div>
+    </div>
+    <div class="topbar__right">
+      <span class="conn" id="connLabel"></span>
+      <button class="btn btn--quiet" id="logoutBtn" type="button" hidden>Sign out</button>
+    </div>
+  </header>
+
+  <!-- Not connected -->
+  <main class="wrap" id="noApi" hidden>
+    <section class="card card--center">
+      <h1>Not connected yet</h1>
+      <p>The Link Maker needs your Google Sheet. Open <code>README.md</code> and follow <b>Step 2</b>, then paste the Web app URL into <code>assets/js/config.js</code> → <code>apiUrl</code>.</p>
+      <p class="hint">To test on your computer first, run <code>python tools/dev_server.py</code> and open <code>http://localhost:8000/admin.html</code>.</p>
+    </section>
+  </main>
+
+  <!-- Sign in -->
+  <main class="wrap" id="loginView" hidden>
+    <form class="card card--center login" id="loginForm">
+      <h1>Sign in</h1>
+      <p class="hint">Use the password you set as <code>ADMIN_KEY</code> in the Google Apps Script.</p>
+      <label class="field">
+        <span>Password</span>
+        <input type="password" name="key" autocomplete="current-password" required />
+      </label>
+      <button class="btn btn--primary" type="submit">Sign in</button>
+      <p class="status" id="loginStatus" role="status"></p>
+    </form>
+  </main>
+
+  <!-- App -->
+  <main class="wrap" id="appView" hidden>
+    <section class="stats" id="stats" aria-label="Summary"></section>
+
+    <div class="grid">
+      <section class="card">
+        <h2>1. Add guests</h2>
+        <p class="hint">Type one guest per line. Khmer or English is fine. Each name gets its own link.</p>
+        <form id="addForm" class="stack">
+          <textarea name="names" rows="6" placeholder="លោក សុខ ហុង និងភរិយា&#10;MR. DARA &amp; WIFE&#10;សម្លាញ់ ស្រីពៅ"></textarea>
+          <div class="row">
+            <button class="btn btn--primary" type="submit">Create links</button>
+            <span class="hint" id="addCount"></span>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>2. Message to send</h2>
+        <p class="hint"><code>{name}</code> becomes the guest's name, <code>{link}</code> becomes their link.</p>
+        <div class="stack">
+          <textarea id="template" rows="6"></textarea>
+          <div class="row">
+            <button class="btn btn--quiet" id="resetTemplate" type="button">Reset to default</button>
+            <span class="hint" id="templateSaved"></span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="card">
+      <div class="card__head">
+        <h2>3. Guest list <span class="count" id="guestCount"></span></h2>
+        <div class="toolbar">
+          <input type="search" id="search" placeholder="Search name…" aria-label="Search guests" />
+          <select id="filter" aria-label="Filter guests">
+            <option value="all">All guests</option>
+            <option value="notOpened">Not opened yet</option>
+            <option value="opened">Opened</option>
+            <option value="yes">Attending</option>
+            <option value="no">Declined</option>
+            <option value="noReply">No reply</option>
+          </select>
+          <button class="btn btn--quiet" id="refreshBtn" type="button">Refresh</button>
+          <button class="btn btn--quiet" id="exportBtn" type="button">Export Excel</button>
+        </div>
+      </div>
+      <ol class="guests" id="guestList"></ol>
+    </section>
+
+    <section class="card">
+      <h2>4. Wishes from guests</h2>
+      <p class="hint">Hidden wishes stay in your sheet but don't show on the invitation.</p>
+      <ul class="wishes" id="wishList"></ul>
+    </section>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="assets/js/config.js"></script>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/admin.js"></script>
+</body>
+</html>
