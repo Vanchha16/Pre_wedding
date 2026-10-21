@@ -202,8 +202,28 @@ function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
 
+// The sheet this script is attached to. If the script was created on its own (not from
+// Extensions > Apps Script), a "Wedding Guests" spreadsheet is made in your Drive once and reused.
+function spreadsheet_() {
+  const active = SpreadsheetApp.getActiveSpreadsheet();
+  if (active) return active;
+  const props = PropertiesService.getScriptProperties();
+  const id = props.getProperty('SHEET_ID');
+  if (id) return SpreadsheetApp.openById(id);
+  const created = SpreadsheetApp.create('Wedding Guests');
+  props.setProperty('SHEET_ID', created.getId());
+  return created;
+}
+
+// Run this once from the editor (select "setup" > Run) to create the sheets and see the sheet link.
+function setup() {
+  sheet_('Guests', GUEST_HEADERS);
+  sheet_('Wishes', WISH_HEADERS);
+  Logger.log('Sheet ready: ' + spreadsheet_().getUrl());
+}
+
 function sheet_(name, headers) {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = spreadsheet_();
   let sheet = ss.getSheetByName(name);
   if (!sheet) {
     sheet = ss.insertSheet(name);

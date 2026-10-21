@@ -7,7 +7,7 @@
 window.WEDDING = {
   // Paste your Google Apps Script "Web app" URL here (see README.md, step 2).
   // Leave empty while testing on your computer with tools/dev_server.py.
-  apiUrl: "",
+  apiUrl: "https://script.google.com/macros/s/AKfycbycpTneeffZyA5EC4ot1k_wcuKNjG-i48PrYf8v8Qx-3fz-fuQAa0GV8-c9wcbDL0QKcA/exec",
 
   // The public address of your invitation, e.g. "https://our-wedding.netlify.app/".
   // Used by the Link Maker to build guest links. Empty = same site as admin.html.
@@ -39,8 +39,8 @@ window.WEDDING = {
   // First day for a 2-day wedding, shown as "19-20". Leave empty ("") for a 1-day wedding.
   firstDay: "2026-10-19",
 
-  venue: { en: "Sample Wedding Hall", km: "សាលមង្គលការ គំរូ" },
-  address: { en: "Phnom Penh, Cambodia", km: "រាជធានីភ្នំពេញ" },
+  venue: { en: "Phnom Penh", km: "រាជធានីភ្នំពេញ" },
+  address: { en: "Cambodia", km: "ព្រះរាជាណាចក្រកម្ពុជា" },
   mapsLink: "https://maps.google.com/?q=Phnom+Penh",
   mapQuery: "Phnom Penh, Cambodia", // what the embedded map searches for
 

@@ -1,2 +1,4 @@
 tools/dev-data.json
 __pycache__/
+# original full-size photos — keep them out of the repo, use resized copies in photos/
+image/
