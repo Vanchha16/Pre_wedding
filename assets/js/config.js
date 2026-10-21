@@ -81,7 +81,8 @@ window.WEDDING = {
   },
 
   // Background music (MP3). Leave empty for no music.
-  music: "",
+  // test-canon.wav is a free test melody (Pachelbel's Canon) — replace it with your own song.
+  music: "music/test-canon.wav",
 
   // Dress code colours shown as dots. Leave the list empty to hide the section.
   dressCode: {
